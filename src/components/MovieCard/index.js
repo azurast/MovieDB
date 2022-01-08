@@ -1,9 +1,9 @@
 import React from "react";
-import {Title, Card, Image} from "./style"
+import {Card} from "./style"
 
 const MovieCard = (props) => {
   const {title, image} = props
-  console.log('image', image)
+
   return (
     <Card>
       <img

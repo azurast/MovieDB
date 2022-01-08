@@ -5,34 +5,13 @@ import MovieCard from "../components/MovieCard";
 import {useEffect, useState} from "react";
 
 function App() {
-  let sample = [
-    {name: "Drama", id: 18},
-    {name: "Family", id: 10751},
-    {name: "Documentary", id: 99}
-  ]
-
   const [myList, setMyList] = useState([])
   const [moviesList, setMoviesList] = useState([])
-  /*
-  * moviesList = [
-  *   .
-  *   .
-  *   .
-  *   {
-  *     genre: "genreName"
-  *     movies: [
-  *       movieTitle: "movieTitle"
-  *       movieImage: "movieImage"
-  *     ]
-  *   },
-  *   .
-  *   .
-  *   .
-  * ]
-  * */
+  const [backgroundImages, setBackgroundImages] = useState([])
+  const [counter, setCounter] = useState(0)
 
   function fetchMoviesByGenre(genre) {
-    const res = fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MOVIE_DB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genre.id}&with_watch_monetization_types=flatrate`, {
+    fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MOVIE_DB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genre.id}&with_watch_monetization_types=flatrate`, {
       method: "GET"
     }).then(response => response.json())
       .then(movies => {
@@ -40,33 +19,47 @@ function App() {
             listName: genre.name,
             movies: movies.results
         }
-        console.log("Object", listObject)
+        // console.log("Object", listObject)
         setMoviesList(moviesList => [...moviesList, listObject])
+        movies.results.forEach(movie => {
+          setBackgroundImages(backgroundImages => [...backgroundImages, movie["backdrop_path"]])
+        })
       }).catch(error => console.error(error))
   }
 
   useEffect(() => {
     fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_MOVIE_DB_API_KEY}&language=en-US`, {
       method: "GET"
-    }).then(response => response.json()).then(response => {
+    }).then(res => res.json()).then(async response => {
       const requests = []
+      console.log('====TEST')
       response.genres.forEach(each => {
         requests.push(fetchMoviesByGenre(each))
       })
-      Promise.all(requests)
+      console.log('====TEST2')
+      await Promise.all(requests).then(response => {
+        console.log('====TEST3', response)
+      })
     }).catch(error => console.error(error))
   }, [])
 
+  useEffect(() => {
+    var interval = setInterval(() => {
+      setCounter(counter => ++counter)
+    }, 7500)
+  }, [counter])
+
   return (
     <div className="App">
-      <NavBar/>
+      <NavBar image={backgroundImages[counter]}/>
       {/*My List*/}
+      <div style={{ height: "200px" }}/>
       <MovieList title="My List" key="myList">
         {
           myList.length <= 0 ? "Nothing on the list" : <MovieCard title="Test" key="Test"/>
         }
       </MovieList>
-      {/*Fetch Genres & Iterate as a List*/}
+      {/*Others*/}
       {
         moviesList.map((list) => {
           return (
