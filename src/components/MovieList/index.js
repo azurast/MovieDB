@@ -1,13 +1,14 @@
 import React from "react";
+import {ListContainer, Title} from "./style";
 
 const MovieList = (props) => {
   const {title, children} = props
   return (
     <div>
-      <h1>{title}</h1>
-      <div>
+      <Title>{title}</Title>
+      <ListContainer>
         {children}
-      </div>
+      </ListContainer>
     </div>
   );
 }

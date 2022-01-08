@@ -12,7 +12,6 @@ function App() {
   ]
 
   const [myList, setMyList] = useState([])
-  const [genresList, setGenresList] = useState([])
   const [moviesList, setMoviesList] = useState([])
   /*
   * moviesList = [
@@ -31,29 +30,31 @@ function App() {
   *   .
   * ]
   * */
+
+  function fetchMoviesByGenre(genre) {
+    const res = fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MOVIE_DB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genre.id}&with_watch_monetization_types=flatrate`, {
+      method: "GET"
+    }).then(response => response.json())
+      .then(movies => {
+        let listObject = {
+            listName: genre.name,
+            movies: movies.results
+        }
+        console.log("Object", listObject)
+        setMoviesList(moviesList => [...moviesList, listObject])
+      }).catch(error => console.error(error))
+  }
+
   useEffect(() => {
-    // TODO: Make this synchronous
-    // 1. Get all genres, store it
     fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_MOVIE_DB_API_KEY}&language=en-US`, {
       method: "GET"
     }).then(response => response.json()).then(response => {
-      console.log(response.genres)
-      setGenresList(response.genres)
+      const requests = []
+      response.genres.forEach(each => {
+        requests.push(fetchMoviesByGenre(each))
+      })
+      Promise.all(requests)
     }).catch(error => console.error(error))
-    // 2. Use stored genre to fetch each movies
-    sample.map((each) => {
-      fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MOVIE_DB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${each.id}&with_watch_monetization_types=flatrate`, {
-        method: "GET"
-      }).then(response => response.json()).then(response => {
-        // console.log("Response", response)
-        let listObject = {
-            listName: each.name,
-            movies: response.results
-        }
-        // console.log("Object", listObject)
-        setMoviesList(moviesList => [...moviesList, listObject])
-      }).catch(error => console.error(error))
-    })
   }, [])
 
   return (
@@ -69,10 +70,10 @@ function App() {
       {
         moviesList.map((list) => {
           return (
-            <MovieList title={list.listName} key={list.listName}>
+            <MovieList title={list.listName} >
               {
                 list.movies.map((movie) => {
-                  return <MovieCard title={movie.title} key={movie.title}/>
+                  return <MovieCard title={movie.title} image={`https://image.tmdb.org/t/p/w200${movie["poster_path"]}`}/>
                 })
               }
             </MovieList>

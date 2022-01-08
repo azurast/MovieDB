@@ -1,11 +1,19 @@
 import React from "react";
+import {Title, Card, Image} from "./style"
 
 const MovieCard = (props) => {
-  const {title} = props
+  const {title, image} = props
+  console.log('image', image)
   return (
-    <div>
-      <p>{title}</p>
-    </div>
+    <Card>
+      <img
+        src={image}
+        style={{
+          background: "no-repeat",
+          backgroundSize: "auto 50%",
+        }}
+      />
+    </Card>
   );
 }
 
