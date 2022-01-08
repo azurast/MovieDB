@@ -1,9 +1,10 @@
 import React from "react";
 
-const MovieCard = () => {
+const MovieCard = (props) => {
+  const {title} = props
   return (
     <div>
-      <p>Movie Card</p>
+      <p>{title}</p>
     </div>
   );
 }
