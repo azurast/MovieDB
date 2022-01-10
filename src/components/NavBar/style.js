@@ -11,10 +11,10 @@ const Navbar = styled.nav`
   `
 const NavBarTitle = styled.h1`
   font-size: 3em;
-  color: orangered;
+  color: #ae2012;
   text-align: left;
   padding: 16px;
-  margin-left: 1em;
+  margin-left: 0.5em;
 `
 
 export { Navbar, NavBarTitle }

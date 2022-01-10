@@ -8,10 +8,11 @@ import {MessageText} from "../components/MovieList/style";
 function App() {
   const [myList, setMyList] = useState([])
   const [moviesList, setMoviesList] = useState([])
-  // const [backgroundImages, setBackgroundImages] = useState([])
+  const [backgroundImages, setBackgroundImages] = useState(["/xPpXYnCWfjkt3zzE0dpCNME1pXF.jpg"]);
+  const [currentImage, setCurrentImage] = useState()
 
   function fetchMoviesByGenre(genre) {
-    return fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MOVIE_DB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genre.id}&with_watch_monetization_types=flatrate`, {
+    fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MOVIE_DB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genre.id}&with_watch_monetization_types=flatrate`, {
       method: "GET"
     }).then(response => response.json())
       .then(movies => {
@@ -20,9 +21,9 @@ function App() {
             movies: movies.results
         }
         setMoviesList(moviesList => [...moviesList, listObject])
-        // listObject.movies.forEach((movie) => {
-        //  setBackgroundImages(backgroundImages => [...backgroundImages, `https://image.tmdb.org/t/p/w200${movie["backdrop_path"]}`])
-        // })
+        listObject.movies.forEach((movie) => {
+         setBackgroundImages(backgroundImages => [...backgroundImages, movie["backdrop_path"]])
+        })
       }).catch(error => console.error(error))
   }
 
@@ -34,7 +35,7 @@ function App() {
       response.genres.forEach(each => {
         requests.push(fetchMoviesByGenre(each))
       })
-      Promise.all(requests).then(response => console.log('===response', response))
+      Promise.all(requests)
     }).catch(error => console.error(error))
   }, [])
 
@@ -42,15 +43,28 @@ function App() {
     localStorage.setItem("myList", JSON.stringify(myList))
   }, [myList])
 
+  useEffect(() => {
+    let counter = 0
+    const interval = setInterval(() => {
+      setCurrentImage(backgroundImages[counter])
+      if (counter <= 3) {
+        counter++;
+      } else {
+        counter = 0;
+      }
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [backgroundImages]);
+
   return (
     <div className="App">
-      <NavBar background="https://image.tmdb.org/t/p/w500/xPpXYnCWfjkt3zzE0dpCNME1pXF.jpg"/>
+      <NavBar background={`https://image.tmdb.org/t/p/w500${currentImage}`}/>
       {/*My List*/}
       <div style={{ height: "200px" }}/>
       <MovieList title="My List" key="myList" style={{ marginTop: "200px" }}>
         {
           myList.length <= 0
-            ? <MessageText>“Nothing here! Scroll to discover more️</MessageText>
+            ? <MessageText>Nothing here! Scroll to discover more️</MessageText>
             : <>
               {
                 myList.map((movie) => {

@@ -7,24 +7,34 @@ const NavBar = (props) => {
     <>
       <Navbar>
         <div style={{
-          display: "flex",
-          width: "100%",
           height: "200px",
-          backgroundImage: "linear-gradient(to left, rgba(0,0,0,0.5), rgba(0,0,0,1))",
+          width: "100%",
+          display: "flex",
         }}>
           <div style={{
-            width: "70%",
+            width: "50%",
+            height: "auto",
+            backgroundColor: "#0b090a"
           }}>
             <NavBarTitle>Movie List</NavBarTitle>
           </div>
           <div style={{
-            height: "200px",
-            width: "30%",
-            display: "flex",
-            flexGrow: "100%",
-            backgroundSize: "cover",
-            background: `url(${background}) no-repeat`
+            width: "50%",
+            backgroundColor: "#0b090a"
           }}/>
+          <div style={{
+            width: "50%",
+            height: "auto",
+            background: `url(${background}) no-repeat`,
+            backgroundSize: "cover"
+          }}>
+            <div style={{
+              display: "flex",
+              width: "100%",
+              height: "200px",
+              backgroundImage: "linear-gradient(to left, rgba(11, 9, 10, 0.5), rgba(11, 9, 10, 1))",
+            }}/>
+          </div>
         </div>
       </Navbar>
     </>
