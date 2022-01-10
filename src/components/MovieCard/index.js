@@ -12,15 +12,18 @@ const MovieCard = (props) => {
     if (!myList.includes(movie)) {
       setMyList(myList => [...myList, movie])
     }
-    console.log(myList)
   }
 
   function onRemoveButtonClick(e) {
     e.preventDefault()
     if (myList.includes(movie)) {
       const index = myList.indexOf(movie)
-      myList.splice(index, 1)
-      setMyList(myList)
+      if (index > -1) {
+        const newArr = myList.filter((each) => {
+          return each.id !== movie.id
+        });
+        setMyList(newArr)
+      }
     }
   }
 

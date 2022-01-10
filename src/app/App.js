@@ -34,6 +34,11 @@ function App() {
     }).catch(error => console.error(error))
   }, [])
 
+  useEffect(() => {
+    console.log("===CHANGES IN MY LIST", myList)
+  }, [myList])
+
+
   return (
     <div className="App">
       <NavBar/>
