@@ -39,6 +39,10 @@ function App() {
     }).catch(error => console.error(error))
   }, [])
 
+  useEffect(() => {
+    localStorage.setItem("myList", JSON.stringify(myList))
+  }, [myList])
+
   return (
     <div className="App">
       <NavBar background="https://image.tmdb.org/t/p/w500/xPpXYnCWfjkt3zzE0dpCNME1pXF.jpg"/>
