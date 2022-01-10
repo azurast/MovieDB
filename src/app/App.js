@@ -7,7 +7,7 @@ import {useEffect, useState} from "react";
 function App() {
   const [myList, setMyList] = useState([])
   const [moviesList, setMoviesList] = useState([])
-  const [counter, setCounter] = useState(0)
+  // const [counter, setCounter] = useState(0)
 
   function fetchMoviesByGenre(genre) {
     fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MOVIE_DB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genre.id}&with_watch_monetization_types=flatrate`, {

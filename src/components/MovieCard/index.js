@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Card, Overlay} from "./style"
-import {PrimaryButton} from "../Button/style";
+// import {PrimaryButton} from "../Button/style";
 import Button from "../Button";
 
 const MovieCard = (props) => {
