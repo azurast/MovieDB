@@ -6,7 +6,6 @@ const Card = styled.div`
 `;
 
 const Overlay = styled.div`
-  //position: absolute;
   background-color: black;
   &:hover {
     opacity: 0.8;

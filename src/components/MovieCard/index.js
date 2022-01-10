@@ -37,7 +37,8 @@ const MovieCard = (props) => {
           src={`https://image.tmdb.org/t/p/w200${movie["poster_path"]}`}
           style={{
             background: "no-repeat",
-            backgroundSize: "auto 50%"
+            backgroundSize: "auto 50%",
+            borderRadius: "0.5em"
           }}
           alt={`${movie.title}Poster`}
         />

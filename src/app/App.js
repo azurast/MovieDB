@@ -3,14 +3,16 @@ import NavBar from "../components/NavBar";
 import MovieList from "../components/MovieList";
 import MovieCard from "../components/MovieCard";
 import {useEffect, useState} from "react";
+import {MessageText} from "../components/MovieList/style";
 
 function App() {
+  let counter = 0
   const [myList, setMyList] = useState([])
   const [moviesList, setMoviesList] = useState([])
-  // const [counter, setCounter] = useState(0)
+  const [backgroundImages, setBackgroundImages] = useState([])
 
   function fetchMoviesByGenre(genre) {
-    fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MOVIE_DB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genre.id}&with_watch_monetization_types=flatrate`, {
+    return fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MOVIE_DB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genre.id}&with_watch_monetization_types=flatrate`, {
       method: "GET"
     }).then(response => response.json())
       .then(movies => {
@@ -19,6 +21,9 @@ function App() {
             movies: movies.results
         }
         setMoviesList(moviesList => [...moviesList, listObject])
+        listObject.movies.forEach((movie) => {
+         setBackgroundImages(backgroundImages => [...backgroundImages, `https://image.tmdb.org/t/p/w200${movie["backdrop_path"]}`])
+        })
       }).catch(error => console.error(error))
   }
 
@@ -30,28 +35,25 @@ function App() {
       response.genres.forEach(each => {
         requests.push(fetchMoviesByGenre(each))
       })
-      Promise.all(requests)
+      Promise.all(requests).then(response => console.log('===response', response))
     }).catch(error => console.error(error))
   }, [])
 
-  useEffect(() => {
-    console.log("===CHANGES IN MY LIST", myList)
-  }, [myList])
-
-
   return (
     <div className="App">
-      <NavBar/>
+      <NavBar background="https://image.tmdb.org/t/p/w500/xPpXYnCWfjkt3zzE0dpCNME1pXF.jpg"/>
       {/*My List*/}
-      <MovieList title="My List" key="myList">
+      <div style={{ height: "200px" }}/>
+      <MovieList title="My List" key="myList" style={{ marginTop: "200px" }}>
         {
           myList.length <= 0
-            ? "Nothing on the list"
+            ? <MessageText>“Nothing here! Scroll to discover more️</MessageText>
             : <>
               {
                 myList.map((movie) => {
                   return (
                     <MovieCard
+                      key={movie.id}
                       movie={movie}
                       myList={myList}
                       setMyList={setMyList}
@@ -67,11 +69,12 @@ function App() {
       {
         moviesList.map((list) => {
           return (
-            <MovieList title={list.listName} >
+            <MovieList title={list.listName} key={list.listName}>
               {
                 list.movies.map((movie) => {
                   return (
                     <MovieCard
+                      key={movie.id}
                       movie={movie}
                       myList={myList}
                       setMyList={setMyList}
