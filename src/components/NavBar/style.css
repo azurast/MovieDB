@@ -1,0 +1,31 @@
+
+.Navbar-Container {
+    height: 200px;
+    width: 100%;
+    display: flex;
+}
+
+.Navbar-LeadingBlock {
+    width: 60%;
+    height: auto;
+    background-color: #0b090a
+}
+
+.Navbar-MidBlock {
+    width: 40%;
+    background-color: #0b090a;
+}
+
+.Navbar-BackgroundImage {
+    width: 50%;
+    height: auto;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.Navbar-GradientOverlay {
+    display: flex;
+    width: 100%;
+    height: 200px;
+    background-image: linear-gradient(to left, rgba(11, 9, 10, 0.5), rgba(11, 9, 10, 1));
+}

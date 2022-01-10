@@ -1,3 +1,4 @@
+import './style.css';
 import React from "react";
 import {Navbar, NavBarTitle} from "./style";
 
@@ -6,35 +7,13 @@ const NavBar = (props) => {
   return (
     <>
       <Navbar>
-        <div style={{
-          height: "200px",
-          width: "100%",
-          display: "flex",
-        }}>
-          <div style={{
-            width: "60%",
-            height: "auto",
-            backgroundColor: "#0b090a"
-          }}>
+        <div className="Navbar-Container">
+          <div className="Navbar-LeadingBlock">
             <NavBarTitle>Movie List</NavBarTitle>
           </div>
-          <div style={{
-            width: "40%",
-            backgroundColor: "#0b090a"
-          }}/>
-          <div style={{
-            width: "50%",
-            height: "auto",
-            backgroundImage: `url(${background})`,
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover"
-          }}>
-            <div style={{
-              display: "flex",
-              width: "100%",
-              height: "200px",
-              backgroundImage: "linear-gradient(to left, rgba(11, 9, 10, 0.5), rgba(11, 9, 10, 1))",
-            }}/>
+          <div className="Navbar-MidBlock"/>
+          <div className="Navbar-BackgroundImage" style={{ backgroundImage: `url(${background})` }}>
+            <div className="Navbar-GradientOverlay"/>
           </div>
         </div>
       </Navbar>

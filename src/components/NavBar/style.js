@@ -17,4 +17,4 @@ const NavBarTitle = styled.h1`
   margin-left: 0.5em;
 `
 
-export { Navbar, NavBarTitle }
+export {Navbar, NavBarTitle}
