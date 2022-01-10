@@ -36,6 +36,7 @@ const MovieCard = (props) => {
             background: "no-repeat",
             backgroundSize: "auto 50%"
           }}
+          alt={`${movie.title}Poster`}
         />
 
         <Button visible={showButton} onClick={isMyList ? onRemoveButtonClick : onAddButtonClick}>
