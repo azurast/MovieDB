@@ -6,10 +6,9 @@ import {useEffect, useState} from "react";
 import {MessageText} from "../components/MovieList/style";
 
 function App() {
-  let counter = 0
   const [myList, setMyList] = useState([])
   const [moviesList, setMoviesList] = useState([])
-  const [backgroundImages, setBackgroundImages] = useState([])
+  // const [backgroundImages, setBackgroundImages] = useState([])
 
   function fetchMoviesByGenre(genre) {
     return fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MOVIE_DB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genre.id}&with_watch_monetization_types=flatrate`, {
@@ -21,9 +20,9 @@ function App() {
             movies: movies.results
         }
         setMoviesList(moviesList => [...moviesList, listObject])
-        listObject.movies.forEach((movie) => {
-         setBackgroundImages(backgroundImages => [...backgroundImages, `https://image.tmdb.org/t/p/w200${movie["backdrop_path"]}`])
-        })
+        // listObject.movies.forEach((movie) => {
+        //  setBackgroundImages(backgroundImages => [...backgroundImages, `https://image.tmdb.org/t/p/w200${movie["backdrop_path"]}`])
+        // })
       }).catch(error => console.error(error))
   }
 
