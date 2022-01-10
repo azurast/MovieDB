@@ -1,12 +1,12 @@
 import React, {useState} from "react";
-import {Card, Overlay} from "./style"
-// import {PrimaryButton} from "../Button/style";
+import {Card, Overlay} from "./style";
 import Button from "../Button";
 
 const MovieCard = (props) => {
   const {movie, myList, setMyList, isMyList} = props
   const [showButton, setShowButton] = useState(false)
 
+  /* Add Action Handler */
   function onAddButtonClick(e) {
     e.preventDefault()
     if (!myList.includes(movie)) {
@@ -14,6 +14,7 @@ const MovieCard = (props) => {
     }
   }
 
+  /* Remove Action Handler */
   function onRemoveButtonClick(e) {
     e.preventDefault()
     if (myList.includes(movie)) {

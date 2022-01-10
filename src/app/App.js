@@ -11,6 +11,7 @@ function App() {
   const [backgroundImages, setBackgroundImages] = useState(["/xPpXYnCWfjkt3zzE0dpCNME1pXF.jpg"]);
   const [currentImage, setCurrentImage] = useState()
 
+  /* Fetch Movies By Genre */
   function fetchMoviesByGenre(genre) {
     fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MOVIE_DB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genre.id}&with_watch_monetization_types=flatrate`, {
       method: "GET"
@@ -27,7 +28,9 @@ function App() {
       }).catch(error => console.error(error))
   }
 
+  /* Fetch Each Genre */
   useEffect(() => {
+    setMoviesList([])
     fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_MOVIE_DB_API_KEY}&language=en-US`, {
       method: "GET"
     }).then(res => res.json()).then(response => {
@@ -39,15 +42,17 @@ function App() {
     }).catch(error => console.error(error))
   }, [])
 
+  /* Update Changes in 'myList' */
   useEffect(() => {
     localStorage.setItem("myList", JSON.stringify(myList))
   }, [myList])
 
+  /* Change Header Image Every 3,5 seconds */
   useEffect(() => {
     let counter = 0
     const interval = setInterval(() => {
       setCurrentImage(backgroundImages[counter])
-      if (counter <= 3) {
+      if (counter <= backgroundImages.length) {
         counter++;
       } else {
         counter = 0;

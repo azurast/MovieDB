@@ -12,20 +12,21 @@ const NavBar = (props) => {
           display: "flex",
         }}>
           <div style={{
-            width: "50%",
+            width: "60%",
             height: "auto",
             backgroundColor: "#0b090a"
           }}>
             <NavBarTitle>Movie List</NavBarTitle>
           </div>
           <div style={{
-            width: "50%",
+            width: "40%",
             backgroundColor: "#0b090a"
           }}/>
           <div style={{
             width: "50%",
             height: "auto",
-            background: `url(${background}) no-repeat`,
+            backgroundImage: `url(${background})`,
+            backgroundRepeat: "no-repeat",
             backgroundSize: "cover"
           }}>
             <div style={{
